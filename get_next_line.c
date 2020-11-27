@@ -6,11 +6,14 @@
 /*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:38:53 by nrubin            #+#    #+#             */
-/*   Updated: 2020/11/27 17:52:43 by nrubin           ###   ########.fr       */
+/*   Updated: 2020/11/27 19:09:55 by nrubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	get_next_line(int fd, char **line)
 {
+}
 
+int	main(void)
+{
 }
