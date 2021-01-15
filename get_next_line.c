@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "get_next_line.h"
 
 #define BUFFER_SIZE 5 
@@ -55,5 +56,35 @@ int	main()
 	get_next_line(fd);
 	get_next_line(fd);
 	close(fd);
+=======
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define BUFF_SIZE 10
+
+int	main()
+{
+	int	fd; // the file descriptor
+	fd = open("test.txt", O_RDONLY);
+
+	char *buff = (char *)malloc(BUFF_SIZE * sizeof(char));
+
+	int ret;
+
+	static char str[5000];
+	
+	while (ret = read("test.txt", str, BUFF_SIZE) > 0)
+	{
+		if (str == NULL)
+			str = strdup(buff);
+		else 
+
+
+	printf("fd is %i\nnumber of bytes read: %i\nbytes read: %s\n", fd, bytes, str);
+>>>>>>> 263262f5f6eb9d011f31a7ee6c0cdc87a211ce3e
 	return (0);
 }
