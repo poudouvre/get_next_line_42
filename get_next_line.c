@@ -10,19 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int	main(void)
+#define BUFF_SIZE 10
+
+int	main()
 {
-	int fd;
-
+	int	fd; // the file descriptor
 	fd = open("test.txt", O_RDONLY);
 
-	printf("%i\n", fd);
+	char *buff = (char *)malloc(BUFF_SIZE * sizeof(char));
 
-	read(fd, )
+	int ret;
 
+	static char str[5000];
+	
+	while (ret = read("test.txt", str, BUFF_SIZE) > 0)
+	{
+		if (str == NULL)
+			str = strdup(buff);
+		else 
+
+
+	printf("fd is %i\nnumber of bytes read: %i\nbytes read: %s\n", fd, bytes, str);
+	return (0);
 }
