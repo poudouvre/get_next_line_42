@@ -79,3 +79,38 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ret[i] = '\0';
 	return (ret);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ret;
+	size_t	len;
+	size_t	i;
+
+	i = 0;
+	len = ft_strlen(s1);
+	if (!(ret = (char *)malloc(sizeof(*ret) * (len + 1))))
+		return (NULL);
+	while (s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	ret[i] = 0;
+	return (ret);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if ((char)c == 0)
+		return ((char *)&s[i++]);
+	return (NULL);
+}

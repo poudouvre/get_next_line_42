@@ -1,59 +1,103 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/27 12:38:53 by nrubin            #+#    #+#             */
-/*   Updated: 2020/12/02 12:50:23 by nrubin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 5 
-
-int	get_next_line(int fd)
+void	ft_line(char **line, char *stock)
 {
-	int	ret;
-	char buf[BUFFER_SIZE + 1];
-	static char *str;
-	char *stock;
-	int i;
-	char *join;
+	int	len;
+	char *tmp;
 
-	ret = read(fd, buf, BUFFER_SIZE);
-	buf[ret] = 0;
-	
-	i = 0;
-	while (buf[i] != '\n' && buf[i] != '\0')
-		i++;
+	len = 0;
+	while (stock[len] != '\n' && stock[len] != '\0')
+		len++;
 
-	str = ft_substr(buf, 0, i);
-	stock = ft_substr(buf, i+1, BUFFER_SIZE);
-	printf("str: %s\n", str);
-	//str = ft_strjoin(stock, buf);
-	//printf("\n");
-	printf("stock:%s\n", stock);
-	//printf("\n");
-	//printf("join %s", join);
-	free(stock);
-	free(str);
-	//free(join);
-	return (0);
+	*line = ft_substr(stock, 0, len);
+
+	if (stock[len] == '\0')
+		free(stock);
+
+	else
+	{
+		tmp = ft_substr(stock, len + 1, ft_strlen(stock));
+		free(stock);
+		stock = ft_strdup(tmp);
+		free(tmp);
+	}
 }
 
-int	main()
+int	ft_output(char **line, char *stock, int ret)
 {
-	int	fd;
+	if (ret < 0)
+	{	
+		free(stock);
+		return (-1);
+	}
 
-	fd = open("test.txt", O_RDONLY);
-	get_next_line(fd);
-	get_next_line(fd);
-	get_next_line(fd);
-	get_next_line(fd);
-	get_next_line(fd);
+	else if (ret == 0 && !stock)
+	{
+		*line = ft_strdup("");
+		printf("%s\n", *line);
+		return (0);
+	}
+
+	else if (!(ft_strchr(stock, '\n')))
+	{
+		*line = ft_strdup(stock);
+		free(stock);
+		printf("%s\n", *line);
+		return (0);
+	}
+
+	else
+	{
+		ft_line(line, stock);
+		printf("%s\n", *line);
+		return(1);
+	}
+}
+
+int	get_next_line(int fd, char **line)
+{
+	int	ret;
+	char buff[BUFFER_SIZE + 1];
+	char *tmp;
+	static char *stock;
+
+	if (fd < 0 || fd > 256 || BUFFER_SIZE < 1 || !*line)
+		return (-1);
+
+	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
+	{
+		buff[ret] = '\0';
+
+		if (!stock)
+			stock = ft_strdup(buff);
+
+		else
+		{
+			tmp = ft_strdup(stock);
+			free(stock);
+			stock = ft_strjoin(tmp, buff);
+			free(tmp);
+		}
+
+		if (ft_strchr(stock, '\n'))
+			break ;
+	}
+
+	return (ft_output(line, stock, ret));
+}
+
+int main(void)
+{
+	char *line[500];
+	int fd = open("test.txt", O_RDONLY);
+
+	get_next_line(fd, line);
+	get_next_line(fd, line);
+	get_next_line(fd, line);
+	get_next_line(fd, line);
+	get_next_line(fd, line);
 	close(fd);
+
 	return (0);
 }
