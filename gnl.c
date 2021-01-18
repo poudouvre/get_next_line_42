@@ -1,6 +1,7 @@
+
 #include "get_next_line.h"
 
-void	ft_line(char **line, char *stock)
+void ft_output(char **line, char *stock)
 {
 	int	len;
 	char *tmp;
@@ -23,10 +24,11 @@ void	ft_line(char **line, char *stock)
 	}
 }
 
-int	ft_output(char **line, char *stock, int ret)
+
+int	ft_values(char **line, char *stock, int ret)
 {
 	if (ret < 0)
-	{	
+	{
 		free(stock);
 		return (-1);
 	}
@@ -34,7 +36,6 @@ int	ft_output(char **line, char *stock, int ret)
 	else if (ret == 0 && !stock)
 	{
 		*line = ft_strdup("");
-		printf("%s\n", *line);
 		return (0);
 	}
 
@@ -42,27 +43,25 @@ int	ft_output(char **line, char *stock, int ret)
 	{
 		*line = ft_strdup(stock);
 		free(stock);
-		printf("%s\n", *line);
 		return (0);
 	}
 
 	else
 	{
-		ft_line(line, stock);
-		printf("%s\n", *line);
-		return(1);
+		ft_output(line, stock);
+		return (1);
 	}
 }
 
 int	get_next_line(int fd, char **line)
 {
-	int	ret;
-	char buff[BUFFER_SIZE + 1];
-	char *tmp;
-	static char *stock;
+	int			ret;
+	char		*tmp;
+	char		buff[BUFFER_SIZE + 1];
+	static char	*stock;
 
-	if (fd < 0 || fd > 256 || BUFFER_SIZE < 1 || !*line)
-		return (-1);
+	if (fd < 0 || fd > 256 || !*line || BUFFER_SIZE < 1)
+		return(- 1);
 
 	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
@@ -83,7 +82,7 @@ int	get_next_line(int fd, char **line)
 			break ;
 	}
 
-	return (ft_output(line, stock, ret));
+	return (ft_values(line, stock, ret));
 }
 
 int main(void)
@@ -91,11 +90,10 @@ int main(void)
 	char *line[500];
 	int fd = open("test.txt", O_RDONLY);
 
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	get_next_line(fd, line);
+	gnl(fd, line);
+	gnl(fd, line);
+	gnl(fd, line);
+	gnl(fd, line);
 	close(fd);
 
 	return (0);
