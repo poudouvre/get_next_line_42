@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_lines(char **line, char **stock)
 {
@@ -53,8 +53,10 @@ int	get_next_line(int fd, char **line)
 	static char *stock[256];
 
 	ret = read(fd, buff, BUFFER_SIZE);
-	if (BUFFER_SIZE < 1 || !line || ret == -1 || fd < 0)
+	if (BUFFER_SIZE < 1 || !line || ret == -1)
+	{
 		return (-1);
+	}
 	while (ret > 0)
 	{
 		buff[ret] = '\0';
