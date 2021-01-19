@@ -1,56 +1,52 @@
 #include "get_next_line.h"
 
-void	ft_line(char **line, char *stock)
+int	ft_lines(char **stock, char **line)
 {
-	int	len;
+	int len;
 	char *tmp;
 
 	len = 0;
-	while (stock[len] != '\n' && stock[len] != '\0')
+
+	while ((*stock)[len] != '\0' && (*stock)[len] != '\n')
 		len++;
 
-	*line = ft_substr(stock, 0, len);
+	*line = ft_substr(*stock, 0, len);
 
-	if (stock[len] == '\0')
-		free(stock);
-
+	if ((*stock)[len] == '\0')
+	{
+		free(*stock);
+		return (0);
+	}
+	
 	else
 	{
-		tmp = ft_substr(stock, len + 1, ft_strlen(stock));
-		free(stock);
-		stock = ft_strdup(tmp);
+		tmp = ft_substr(*stock, len + 1, ft_strlen(*stock));
+		free(*stock);
+		*stock = ft_strdup(tmp);
 		free(tmp);
+		return (1);
 	}
 }
 
-int	ft_output(char **line, char *stock, int ret)
+
+int	ft_value(char **stock, char **line, int ret)
 {
 	if (ret < 0)
-	{	
-		free(stock);
+	{
+		free(*stock);
 		return (-1);
 	}
 
-	else if (ret == 0 && !stock)
+	else if (ret == 0 && !(*stock))
 	{
 		*line = ft_strdup("");
-		printf("%s\n", *line);
+		free(*stock);
 		return (0);
 	}
-
-	else if (!(ft_strchr(stock, '\n')))
-	{
-		*line = ft_strdup(stock);
-		free(stock);
-		printf("%s\n", *line);
-		return (0);
-	}
-
+	
 	else
 	{
-		ft_line(line, stock);
-		printf("%s\n", *line);
-		return(1);
+		return (ft_lines(stock, line));
 	}
 }
 
@@ -61,10 +57,12 @@ int	get_next_line(int fd, char **line)
 	char *tmp;
 	static char *stock;
 
-	if (fd < 0 || fd > 256 || BUFFER_SIZE < 1 || !*line)
+	if (fd < 0 || BUFFER_SIZE < 1 || !line)
 		return (-1);
 
-	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
+	ret = read(fd, buff, BUFFER_SIZE);
+
+	while (ret > 0)
 	{
 		buff[ret] = '\0';
 
@@ -73,30 +71,16 @@ int	get_next_line(int fd, char **line)
 
 		else
 		{
-			tmp = ft_strdup(stock);
+			tmp = ft_strjoin(stock, buff);
 			free(stock);
-			stock = ft_strjoin(tmp, buff);
-			free(tmp);
+			stock = tmp;
 		}
 
 		if (ft_strchr(stock, '\n'))
 			break ;
+
+		ret = read(fd, buff, BUFFER_SIZE);
 	}
 
-	return (ft_output(line, stock, ret));
-}
-
-int main(void)
-{
-	char *line[500];
-	int fd = open("test.txt", O_RDONLY);
-
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	get_next_line(fd, line);
-	close(fd);
-
-	return (0);
+	return (ft_value(&stock, line, ret));
 }
