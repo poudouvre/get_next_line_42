@@ -6,7 +6,7 @@
 /*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 14:30:13 by nrubin            #+#    #+#             */
-/*   Updated: 2021/01/19 14:32:28 by nrubin           ###   ########.fr       */
+/*   Updated: 2021/01/19 14:50:14 by nrubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	get_next_line(int fd, char **line)
 	static char *stock[256];
 
 	ret = read(fd, buff, BUFFER_SIZE);
-	if (BUFFER_SIZE < 1 || !line || ret == -1 || fd < 0)
+	if (BUFFER_SIZE < 1 || !line || ret == -1)
 		return (-1);
 	while (ret > 0)
 	{
