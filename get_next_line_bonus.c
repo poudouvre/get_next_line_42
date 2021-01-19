@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 14:31:30 by nrubin            #+#    #+#             */
+/*   Updated: 2021/01/19 14:32:15 by nrubin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 int	ft_lines(char **line, char **stock)
@@ -27,7 +39,6 @@ int	ft_lines(char **line, char **stock)
 	}
 }
 
-
 int	ft_value(int ret, char **line, char **stock)
 {
 	if (ret < 0)
@@ -53,10 +64,8 @@ int	get_next_line(int fd, char **line)
 	static char *stock[256];
 
 	ret = read(fd, buff, BUFFER_SIZE);
-	if (BUFFER_SIZE < 1 || !line || ret == -1)
-	{
+	if (BUFFER_SIZE < 1 || !line || ret == -1 || fd < 0)
 		return (-1);
-	}
 	while (ret > 0)
 	{
 		buff[ret] = '\0';

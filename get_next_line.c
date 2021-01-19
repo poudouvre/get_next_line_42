@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 14:30:13 by nrubin            #+#    #+#             */
+/*   Updated: 2021/01/19 14:32:28 by nrubin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 int	ft_lines(char **line, char **stock)
@@ -26,7 +38,6 @@ int	ft_lines(char **line, char **stock)
 		return (1);
 	}
 }
-
 
 int	ft_value(int ret, char **line, char **stock)
 {

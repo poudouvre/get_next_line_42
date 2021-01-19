@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:39:14 by nrubin            #+#    #+#             */
-/*   Updated: 2020/12/01 18:16:08 by nrubin           ###   ########.fr       */
+/*   Updated: 2021/01/19 14:32:47 by nrubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 # define GET_NEXT_LINE_BONUS_H
 
-#include <sys/uio.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <sys/uio.h>
+# include <sys/types.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
 int		get_next_line(int fd, char **line);
 size_t	ft_strlen(const char *s);

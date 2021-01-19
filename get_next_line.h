@@ -14,12 +14,12 @@
 
 # define GET_NEXT_LINE_H
 
-#include <sys/uio.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <sys/uio.h>
+# include <sys/types.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
 int		get_next_line(int fd, char **line);
 size_t	ft_strlen(const char *s);
