@@ -1,9 +1,9 @@
 #include "get_next_line.h"
 
-int	ft_lines(char **stock, char **line)
+int	ft_lines(char **line, char **stock)
 {
-	int len;
-	char *tmp;
+	int		len;
+	char	*tmp;
 
 	len = 0;
 
@@ -15,6 +15,7 @@ int	ft_lines(char **stock, char **line)
 	if ((*stock)[len] == '\0')
 	{
 		free(*stock);
+		*stock = NULL;
 		return (0);
 	}
 	
@@ -22,18 +23,21 @@ int	ft_lines(char **stock, char **line)
 	{
 		tmp = ft_substr(*stock, len + 1, ft_strlen(*stock));
 		free(*stock);
+		*stock = NULL;
 		*stock = ft_strdup(tmp);
 		free(tmp);
+		tmp = NULL;
 		return (1);
 	}
 }
 
 
-int	ft_value(char **stock, char **line, int ret)
+int	ft_value(int ret, char **line, char **stock)
 {
 	if (ret < 0)
 	{
 		free(*stock);
+		*stock = NULL;
 		return (-1);
 	}
 
@@ -41,20 +45,19 @@ int	ft_value(char **stock, char **line, int ret)
 	{
 		*line = ft_strdup("");
 		free(*stock);
+		*stock = NULL;
 		return (0);
 	}
 	
 	else
-	{
-		return (ft_lines(stock, line));
-	}
+		return (ft_lines(line, stock));
 }
 
 int	get_next_line(int fd, char **line)
 {
-	int	ret;
-	char buff[BUFFER_SIZE + 1];
-	char *tmp;
+	int			ret;
+	char		buff[BUFFER_SIZE + 1];
+	char		*tmp;
 	static char *stock;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || !line)
@@ -73,7 +76,10 @@ int	get_next_line(int fd, char **line)
 		{
 			tmp = ft_strjoin(stock, buff);
 			free(stock);
-			stock = tmp;
+			stock = NULL;
+			stock = ft_strdup(tmp);
+			free(tmp);
+			tmp = NULL;
 		}
 
 		if (ft_strchr(stock, '\n'))
@@ -82,5 +88,5 @@ int	get_next_line(int fd, char **line)
 		ret = read(fd, buff, BUFFER_SIZE);
 	}
 
-	return (ft_value(&stock, line, ret));
+	return (ft_value(ret, line, &stock));
 }
