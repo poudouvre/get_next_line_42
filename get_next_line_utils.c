@@ -6,7 +6,7 @@
 /*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 17:43:39 by nrubin            #+#    #+#             */
-/*   Updated: 2021/01/20 15:14:54 by nrubin           ###   ########.fr       */
+/*   Updated: 2021/01/20 16:26:09 by nrubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		len;
 	char	*ret;
 	char	*str;
-	
+
 	len = ft_strlen(s1) + ft_strlen(s2);
 	str = (char *)malloc(sizeof(*str) * (len + 1));
 	if (!str)
 		return (NULL);
 	ret = str;
-	while(*s1)
+	while (*s1)
 		*str++ = *s1++;
 	while (*s2)
 		*str++ = *s2++;
@@ -54,9 +54,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ret = (char *)malloc(sizeof(*ret) * (len + 1));
 	if (!ret)
 		return (NULL);
-	ret[len] = '\0';
-	while (len--)
-		ret[len] = s[start + len];
+	while (s[start] && i < len)
+	{
+		ret[i] = s[start];
+		i++;
+		start++;
+	}
+	ret[i] = 0;
 	return (ret);
 }
 
