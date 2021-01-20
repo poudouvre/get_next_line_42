@@ -6,7 +6,7 @@
 /*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 14:30:13 by nrubin            #+#    #+#             */
-/*   Updated: 2021/01/19 14:50:14 by nrubin           ###   ########.fr       */
+/*   Updated: 2021/01/20 14:37:21 by nrubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_value(int ret, char **line, char **stock)
 	else if (ret == 0 && !(*stock))
 	{
 		*line = ft_strdup("");
-		free(*stock);
 		return (0);
 	}
 	else
