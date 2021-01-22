@@ -6,11 +6,15 @@
 /*   By: nrubin <nrubin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 14:30:13 by nrubin            #+#    #+#             */
-/*   Updated: 2021/01/20 16:37:55 by nrubin           ###   ########.fr       */
+/*   Updated: 2021/01/22 15:52:13 by nrubin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+// This function fills line until either newline or EOF are encountered. If EOF is encountered
+// 0 is simply returned. If newline is encountered, 1 is returned and stock is filled with the
+// leftover bytes.
 
 int	ft_lines(char **line, char **stock)
 {
@@ -39,14 +43,16 @@ int	ft_lines(char **line, char **stock)
 	}
 }
 
+// This function checks for and handles two specific cases, otherwise passing line and stock to another function.
+
 int	ft_value(int ret, char **line, char **stock)
 {
-	if (ret < 0)
+	if (ret < 0) // in case a read fails midway
 	{
 		free(*stock);
 		return (-1);
 	}
-	else if (ret == 0 && !(*stock))
+	else if (ret == 0 && !(*stock)) // in case the read is successful but the file is empty
 	{
 		*line = ft_strdup("");
 		return (0);
@@ -55,12 +61,17 @@ int	ft_value(int ret, char **line, char **stock)
 		return (ft_lines(line, stock));
 }
 
+// This function will call read in a loop until reaching EOF. If it is the first call of the function, stock is filled
+// with the buffer read. If it isn't, the new buffer read is appendend to stock. This process is repeated until a newline
+// is reached. Both stock and line are passed to ft_value and ft_lines which will fill each appropriately depending on
+// EOF or newline being reached first.
+
 int	get_next_line(int fd, char **line)
 {
 	int			ret;
 	char		buff[BUFFER_SIZE + 1];
 	char		*tmp;
-	static char *stock[256];
+	static char *stock[256]; // amd array for 256 strings is created so as to allow multiple calls on differents FDs.
 
 	ret = read(fd, buff, BUFFER_SIZE);
 	if (BUFFER_SIZE < 1 || !line || ret == -1)
